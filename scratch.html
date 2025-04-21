@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motivation Builder</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="main-header">
+      <h1>Motivation Builder for When you Feel <span id="typed"></span></h1>
+      <h2 class="subheading">Proven method to getting back on track in less than five minutes.</h2>
+      <p class="intro-text">Hey, it's ok we all feel like a poopy diaper sometimes. For your sake, I'm going to take the role of therapist for now, meaning you need to put 100% trust into what I'm gonna say... even though I have zero credentials and a deep love for microwave nachos — just go with it.</p>
+    </header>
+
+    <section class="steps">
+      <h3>Now, I need you to follow these steps</h3>
+      <ol>
+        <li>
+          <strong>Watch this video</strong><br>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/twnX--nHJ1w" frameborder="0" allowfullscreen></iframe>
+            <ul>
+                <li>td;lr you are awesome</li>
+            </ul>
+        </li>
+
+        <li>
+          <strong>Remember how lucky you are. I mean, you could be another point on this graph but you're not.</strong><br>
+          <div class="viz-container">
+            <iframe src="https://public.tableau.com/views/Cow_Hatecrime_Mobile/Dashboard12?:showVizHome=no&:embed=true" width="100%" height="600px" frameborder="0"></iframe>
+          </div>
+        </li>
+
+        <li>
+          <strong>Answer these questions to reconnect with what matters most to you. (this is my web app btw)</strong>
+          <div id="questionnaire"></div>
+        </li>
+      </ol>
+    </section>
+
+    <div class="final-message" id="final-message" style="display:none;">
+      <h3>See, what you need to do is important. You have it in you. Now get off those buttocks of yours and JUST DO IT!</h3>
+      <img src="just-do-it.jpg" alt="JUST DO IT Guy" style="width:300px;height:auto;">
+    </div>
+
+    <footer>
+      <a href="#top">Back to Top</a>
+      <p>if my therapy session cured you, <a href="YOUR_RESUME_LINK_HERE" target="_blank">check out my resume</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Typed.js animation
+    new Typed('#typed', {
+      strings: ['Lazy', 'Notconfident', 'Stupid'],
+      typeSpeed: 100,
+      backSpeed: 60,
+      loop: true
+    });
+
+    // Question Flow
+    const questions = [
+      "What’s something you want to do, even if it feels hard?",
+      "Why do you think that matters to you?",
+      "What kind of person would you have to be right now to follow through with that goal?",
+      //"How would taking the next small step today move you closer to that version of you?",
+      "What becomes possible in your life when you follow through?",
+    ];
+
+    const responses = [
+      "wow very nice",
+      "hmm very thoughtful",
+      "we're getting somewhere...just one more question",
+      // "good stuff",
+      // "that version of you is so real",
+      "the possibilities are endless",
+    ];
+
+    let current = 0;
+    const container = document.getElementById('questionnaire');
+
+    function renderQuestion() {
+      if (current < questions.length) {
+        const div = document.createElement('div');
+        div.className = 'question-block';
+        div.innerHTML = `
+          <label>${questions[current]}<br><textarea rows="3"></textarea></label><br>
+          <button>Submit</button><span class="response-text"></span>
+        `;
+        container.appendChild(div);
+
+        const button = div.querySelector('button');
+        const responseText = div.querySelector('.response-text');
+        button.addEventListener('click', () => {
+          responseText.textContent = responses[current] || "great insight";
+          button.disabled = true;
+          current++;
+          setTimeout(renderQuestion, 500);
+        });
+      } else {
+        document.getElementById('final-message').style.display = 'block';
+      }
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
